@@ -4,6 +4,11 @@ var router = express.Router();
 /* GET users listing. */
 router.get('/move', function (req, res) {
 	var game = require('../lib/game').current();
+
+	if (!game) {
+		return res.status(404).send('no game started');
+	}
+
 	var move = game.move();
 	res.send(move);
 });
