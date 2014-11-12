@@ -15,6 +15,10 @@ router.post('/update', function (req, res) {
 		currentGame.update({
 			card: data
 		});
+	} else if (command === 'POST_BLIND') {
+		currentGame.postBlind();
+	} else if (command === 'RECEIVE_CHIPS') {
+		currentGame.receiveChips(parseInt(data));
 	}
 
 	res.send('updating');
