@@ -47,7 +47,7 @@ describe('Start routes', function () {
 						opponent: "bot buster",
 						chips: "2133",
 						hands: "301123",
-						handCount: 0,
+						moveCount: 0,
 						moves: [],
 						cardsPlayed: {}
 					})

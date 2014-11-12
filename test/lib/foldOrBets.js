@@ -29,5 +29,19 @@ describe('Fold Or Bet Betting Strategy', function() {
 		}
 		game["card"] = 'J';
 		foldOrBet(game);
-	});		
+	});	
+
+	it.skip('should go bust with an ace', function(done) {	
+		var game = {}
+		game.stakes =0
+		game.bet =function(amount){
+			if (amount>21){
+				done();
+			}			
+		}
+		game["card"] = 'A';
+		foldOrBet(game);
+	});	
+
+
 });
