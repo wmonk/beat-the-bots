@@ -10,6 +10,7 @@ router.get('/move', function (req, res) {
 	}
 
 	var move = game.move();
+	res.set('Content-Type', 'text/plain');
 	res.send(move);
 });
 
