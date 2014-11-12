@@ -31,9 +31,9 @@ describe('Fold Or Bet Betting Strategy', function() {
 		foldOrBet(game);
 	});	
 
-	it.skip('should go bust with an ace', function(done) {	
+	it('should go bust with an ace', function(done) {	
 		var game = {}
-		game.stakes =0
+		game.stakes =35
 		game.bet =function(amount){
 			if (amount>21){
 				done();
