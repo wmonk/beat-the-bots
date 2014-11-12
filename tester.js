@@ -1,3 +1,5 @@
+// var globUrl = 'http://beat-the-bots.dokku.julianhaeger.com';
+var globUrl = 'http://10.44.14.98:3333';
 var request = require('request');
 
 var commands = [{
@@ -29,9 +31,8 @@ var commands = [{
 }];
 
 request.post({
-	url: 'http://beat-the-bots.dokku.julianhaeger.com/start',
+	url: globUrl + '/start',
 	form: {
-		// request.post({ url: 'http://10.44.14.98:3333/start', form: {
 		'OPPONENT_NAME': 'botter',
 		'HAND_LIMIT': '30123123',
 		'STARTING_CHIP_COUNT': '123123'
@@ -47,7 +48,7 @@ var i = 0;
 function run() {
 	var command = commands[Math.floor(Math.random() * commands.length)];
 	if (command.url === '/move') {
-		request('http://beat-the-bots.dokku.julianhaeger.com' + command.url, function (err, res, body) {
+		request(globUrl + command.url, function (err, res, body) {
 			if (err) {
 				console.log(command.url);
 				return console.log(err);
@@ -66,9 +67,8 @@ function run() {
 		});
 	} else {
 		request.post({
-			url: 'http://beat-the-bots.dokku.julianhaeger.com' + command.url,
+			url: globUrl + command.url,
 			form: {
-				// request.post({ url: 'http://10.44.14.98:3333/update', form: {
 				COMMAND: command.command,
 				DATA: command.data
 			}
