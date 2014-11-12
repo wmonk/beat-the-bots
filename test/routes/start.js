@@ -46,7 +46,9 @@ describe('Start routes', function () {
 					.expect({
 						opponent: "bot buster",
 						chips: "2133",
-						hands: "301123"
+						hands: "301123",
+						handCount:0,
+						moves:[]
 					})
 					.end(done);
 			});
