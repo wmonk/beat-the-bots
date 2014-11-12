@@ -1,4 +1,4 @@
-logs/access.log
+logs/*
 # Runtime data
 pids
 *.pid
