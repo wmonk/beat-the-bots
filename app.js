@@ -16,14 +16,17 @@ var chalk = require('chalk');
 
 var app = express();
 
-// logging to file
-var accessLogStream = fs.createWriteStream(__dirname + '/logs/access.log', {
-    flags: 'a'
+var accessLogStream = fs.createWriteStream(__dirname + '/logs/access.log', {flags: 'a'});
+app.use(morgan('combined', {stream: accessLogStream}));
+
+app.use(function (req, res, next) {
+    var game = require('./lib/game').current();
+    if (game) {
+        console.log(chalk.gray('Card:'), chalk.red(game.card), chalk.gray('Chips:'), chalk.green(game.chips), chalk.gray('Opponent:'), chalk.blue(game.opponent));
+    }
+
+    next();
 });
-app.use(morgan('combined', {
-    stream: accessLogStream
-}));
-app.use(morgan('dev'));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
