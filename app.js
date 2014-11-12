@@ -16,14 +16,21 @@ var chalk = require('chalk');
 
 var app = express();
 
-// logging to file
 var accessLogStream = fs.createWriteStream(__dirname + '/logs/access.log', {
     flags: 'a'
 });
 app.use(morgan('combined', {
     stream: accessLogStream
 }));
-app.use(morgan('dev'));
+
+app.use(function (req, res, next) {
+    var game = require('./lib/game').current();
+    if (game) {
+        console.log(chalk.gray('Card:'), chalk.red(game.card), chalk.gray('Chips:'), chalk.green(game.chips), chalk.gray('Opponent:'), chalk.blue(game.opponent));
+    }
+
+    next();
+});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -73,6 +80,7 @@ if (app.get('env') === 'development') {
 // no stacktraces leaked to user
 app.use(function (err, req, res, next) {
     res.status(err.status || 500);
+    console.error(JSON.stringify(err));
     res.render('error', {
         message: err.message,
         error: {}

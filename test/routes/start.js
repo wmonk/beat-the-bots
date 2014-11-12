@@ -30,7 +30,6 @@ describe('Start routes', function () {
 			.end(done);
 	});
 
-
 	it('should save the game states', function (done) {
 		server
 			.post('/start')
@@ -47,7 +46,6 @@ describe('Start routes', function () {
 					.expect({
 						opponent: "bot buster",
 						chips: "2133",
-						handCount :"0",
 						hands: "301123"
 					})
 					.end(done);

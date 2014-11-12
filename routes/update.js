@@ -1,24 +1,40 @@
 var express = require('express');
 var router = express.Router();
+var chalk = require('chalk');
 
 /* GET users listing. */
 router.post('/update', function (req, res) {
-	var currentGame = require('../lib/game').current();
-	if (!currentGame) {
+	var game = require('../lib/game').current();
+	if (!game) {
 		return res.status(404).send('no game started');
 	}
 
 	var command = req.param('COMMAND');
 	var data = req.param('DATA');
 
-	if (command === 'CARD') {
-		currentGame.update({
-			card: data
-		});
-	} else if (command === 'POST_BLIND') {
-		currentGame.postBlind();
-	} else if (command === 'RECEIVE_CHIPS') {
-		currentGame.receiveChips(parseInt(data));
+	console.log(chalk.gray('Command:'), chalk.green(command), chalk.gray('Data:'), chalk.blue(data));
+
+	switch (command) {
+		case 'RECEIVE_BUTTON':
+
+		break; // we do a move
+		case 'POST_BLIND':
+			game.postBlind();
+		break; // 1 chip removed
+		case 'CARD':
+			game.update({
+				card: data
+			});
+		break; // what card we are assigend
+		case 'OPPONENT_MOVE':
+			game.lastMove(data);
+		break; // opponent move
+		case 'RECEIVE_CHIPS':
+			game.receiveChips(parseInt(data));
+		break; // chips recieved 0 = lost, X = wond
+		case 'OPPONENT_CARD':
+
+		break; //
 	}
 
 	res.send('updating');
