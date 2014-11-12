@@ -1,13 +1,20 @@
 var request = require('supertest');
 var express = require('express');
-var	startRoutes = require('../../routes/start');
+var indexRoutes = require('../../routes/index');
+var startRoutes = require('../../routes/start');
+var bodyParser = require('body-parser');
 var app;
 var server;
 
-describe('Start routes', function() {
+describe('Start routes', function () {
 	beforeEach(function (done) {
 		app = express();
+		app.use(bodyParser.json());
+		app.use(bodyParser.urlencoded({
+			extended: false
+		}));
 
+		app.use(indexRoutes);
 		app.use(startRoutes);
 
 		server = request(app);
@@ -15,11 +22,33 @@ describe('Start routes', function() {
 		done();
 	});
 
-	it('should respond to test', function(done) {
+	it('should respond to test', function (done) {
 		server
 			.post('/start')
 			.expect(200)
 			.expect(/starting/)
 			.end(done);
+	});
+
+	it('should save the game states', function (done) {
+		server
+			.post('/start')
+			.send({
+				'OPPONENT_NAME': 'bot buster',
+				'HAND_LIMIT': '301123',
+				'STARTING_CHIP_COUNT': '2133'
+			})
+			.expect(200)
+			.expect(/starting/)
+			.end(function () {
+				server
+					.get('/')
+					.expect({
+						opponent: "bot buster",
+						chips: "2133",
+						hands: "301123"
+					})
+					.end(done);
+			});
 	});
 });
