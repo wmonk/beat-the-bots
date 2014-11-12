@@ -33,7 +33,8 @@ router.post('/update', function (req, res) {
 			game.receiveChips(parseInt(data));
 		break; // chips recieved 0 = lost, X = wond
 		case 'OPPONENT_CARD':
-
+			console.log(chalk.gray('Cards played:', chalk.blue(JSON.stringify(game.cardsPlayed))));
+			game.cardPlayed(data);
 		break; //
 	}
 
