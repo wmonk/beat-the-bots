@@ -30,6 +30,7 @@ describe('Start routes', function () {
 			.end(done);
 	});
 
+
 	it('should save the game states', function (done) {
 		server
 			.post('/start')
@@ -46,9 +47,38 @@ describe('Start routes', function () {
 					.expect({
 						opponent: "bot buster",
 						chips: "2133",
+						handCount :"0",
 						hands: "301123"
 					})
 					.end(done);
 			});
 	});
+
+	it.skip('should update the chip count', function (done) {
+		server
+			.post('/start')
+			.send({
+				'OPPONENT_NAME': 'bot buster',
+				'HAND_LIMIT': '301123',
+				'STARTING_CHIP_COUNT': '1000'
+			});
+		server			
+			.post('/update')
+			.send({
+				'RECEIVE_CHIPS': '50'				
+			})
+			.expect(/starting/)
+			.end(function () {
+				server
+					.get('/')
+					.expect({
+						opponent: "bot buster",
+						chips: "1050",
+						handCount :0,
+						hands: "301123"
+					})
+					.end(done);
+			});
+	});
+
 });
