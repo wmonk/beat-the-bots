@@ -47,8 +47,9 @@ describe('Start routes', function () {
 						opponent: "bot buster",
 						chips: "2133",
 						hands: "301123",
-						handCount:0,
-						moves:[]
+						handCount: 0,
+						moves: [],
+						cardsPlayed: {}
 					})
 					.end(done);
 			});
@@ -62,10 +63,10 @@ describe('Start routes', function () {
 				'HAND_LIMIT': '301123',
 				'STARTING_CHIP_COUNT': '1000'
 			});
-		server			
+		server
 			.post('/update')
 			.send({
-				'RECEIVE_CHIPS': '50'				
+				'RECEIVE_CHIPS': '50'
 			})
 			.expect(/starting/)
 			.end(function () {
@@ -74,7 +75,7 @@ describe('Start routes', function () {
 					.expect({
 						opponent: "bot buster",
 						chips: "1050",
-						handCount :0,
+						handCount: 0,
 						hands: "301123"
 					})
 					.end(done);
