@@ -13,4 +13,17 @@ describe('Game Book keeping', function() {
 			done()
 		}
 	});	
+
+	it('should deduct a single chip for posting a blind', function(done) {	
+	game.startNew({
+		opponent: "bot",
+		chips: 1,
+		hands: 300
+	});
+	var currentGame = game.current();	
+		currentGame.postBlind()
+		if(currentGame.chips == 0){
+			done()
+		}
+	});	
 });
