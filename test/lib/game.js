@@ -26,4 +26,17 @@ describe('Game Book keeping', function() {
 			done()
 		}
 	});	
+
+	it('should increment when chips are win', function(done) {	
+	game.startNew({
+		opponent: "bot",
+		chips: 1,
+		hands: 300
+	});
+	var currentGame = game.current();	
+		currentGame.receiveChips(100)
+		if(currentGame.chips == 101){
+			done()
+		}
+	});	
 });
