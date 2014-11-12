@@ -16,8 +16,12 @@ var chalk = require('chalk');
 
 var app = express();
 
-var accessLogStream = fs.createWriteStream(__dirname + '/logs/access.log', {flags: 'a'});
-app.use(morgan('combined', {stream: accessLogStream}));
+var accessLogStream = fs.createWriteStream(__dirname + '/logs/access.log', {
+    flags: 'a'
+});
+app.use(morgan('combined', {
+    stream: accessLogStream
+}));
 
 app.use(function (req, res, next) {
     var game = require('./lib/game').current();
@@ -77,6 +81,7 @@ if (app.get('env') === 'development') {
 app.use(function (err, req, res, next) {
     res.status(err.status || 500);
     res.render('error', {
+        console.error(JSON.stringify(err));
         message: err.message,
         error: {}
     });
