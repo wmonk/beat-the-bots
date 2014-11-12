@@ -9,6 +9,7 @@ router.post('/start', function (req, res) {
 	var chips = req.param('STARTING_CHIP_COUNT');
 	var hands = req.param('HAND_LIMIT');
 
+	console.log('\n\n\n\n');
 	console.log(chalk.gray('Bot name: '), chalk.cyan(bot), '\t', chalk.gray('Chip count:'), chalk.green(chips), '\t', chalk.gray('Hands to play: '), chalk.blue(hands));
 
 	game.startNew({
